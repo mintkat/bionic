@@ -549,6 +549,7 @@ libc_pthread_src_files := \
     bionic/pthread_setname_np.cpp \
     bionic/pthread_setschedparam.cpp \
     bionic/pthread_sigmask.cpp \
+    bionic/safestack.cpp \
 
 libc_thread_atexit_impl_src_files := \
     bionic/__cxa_thread_atexit_impl.cpp \
@@ -618,6 +619,11 @@ ifeq ($(TARGET_CPU_SMP),true)
     libc_common_cflags += -DANDROID_SMP=1
 else
     libc_common_cflags += -DANDROID_SMP=0
+endif
+
+ifeq ($(strip $(USE_SAFESTACK)),true)
+  libc_common_cflags += -DBIONIC_SAFESTACK
+  libc_common_cflags_32 += -UBIONIC_SAFESTACK
 endif
 
 # Define some common conlyflags

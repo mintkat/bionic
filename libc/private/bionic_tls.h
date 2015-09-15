@@ -67,6 +67,10 @@ enum {
   TLS_SLOT_STACK_GUARD = 5, // GCC requires this specific slot for x86.
   TLS_SLOT_DLERROR,
 
+  // Unsafe stack pointer. See http://clang.llvm.org/docs/SafeStack.html.
+  // This slot is accessed directly from the compiled code. Don't move.
+  TLS_SLOT_SAFESTACK = 9,
+
   BIONIC_TLS_SLOTS // Must come last!
 };
 

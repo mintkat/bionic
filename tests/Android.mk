@@ -40,6 +40,9 @@ test_cflags = \
 
 test_cflags += -D__STDC_LIMIT_MACROS  # For glibc.
 
+ifeq ($(strip $(USE_SAFESTACK)),true)
+test_cflags += -DBIONIC_SAFESTACK
+endif
 ifeq ($(MALLOC_IMPL),dlmalloc)
 test_cflags += -DUSE_DLMALLOC
 else
@@ -74,6 +77,7 @@ libBionicStandardTests_src_files := \
     pty_test.cpp \
     regex_test.cpp \
     resolv_test.cpp \
+    safestack_test.cpp \
     sched_test.cpp \
     search_test.cpp \
     semaphore_test.cpp \
