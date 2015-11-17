@@ -26,15 +26,15 @@
  * SUCH DAMAGE.
  */
 
-#ifndef DEBUG_BACKTRACE_H
-#define DEBUG_BACKTRACE_H
+#ifndef MALLOC_DEBUG_BACKTRACE_H
+#define MALLOC_DEBUG_BACKTRACE_H
 
 #include <stdint.h>
 #include <sys/cdefs.h>
 
-__LIBC_HIDDEN__ void backtrace_startup();
-__LIBC_HIDDEN__ void backtrace_shutdown();
-__LIBC_HIDDEN__ int get_backtrace(uintptr_t* stack_frames, size_t max_depth);
-__LIBC_HIDDEN__ void log_backtrace(uintptr_t* stack_frames, size_t frame_count);
+void backtrace_startup();
+void backtrace_shutdown();
+size_t backtrace_get(uintptr_t* frames, size_t frame_count);
+void backtrace_log(uintptr_t* frames, size_t frame_count);
 
-#endif /* DEBUG_BACKTRACE_H */
+#endif // MALLOC_DEBUG_BACKTRACE_H

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 The Android Open Source Project
+ * Copyright (C) 2015 The Android Open Source Project
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,24 +26,36 @@
  * SUCH DAMAGE.
  */
 
-#ifndef DEBUG_MAPINFO_H
-#define DEBUG_MAPINFO_H
+#ifndef DEBUG_MALLOC_BACKTRACEDATA_H
+#define DEBUG_MALLOC_BACKTRACEDATA_H
 
-#include <sys/cdefs.h>
-#include <sys/types.h>
+#include <stdint.h>
 
-struct mapinfo_t {
-  struct mapinfo_t* next;
-  uintptr_t start;
-  uintptr_t end;
-  uintptr_t offset;
-  uintptr_t load_base;
-  bool load_base_read;
-  char name[];
+#include <private/bionic_macros.h>
+
+// Forward declarations.
+struct Config;
+
+class BacktraceData {
+ public:
+  BacktraceData(const Config& config, size_t* offset);
+  virtual ~BacktraceData() = default;
+
+  bool Initialize(const Config& config);
+
+  inline size_t alloc_offset() { return alloc_offset_; }
+  inline size_t free_offset() { return free_offset_; }
+
+  bool enabled() { return enabled_; }
+  void set_enabled(bool enabled) { enabled_ = enabled; }
+
+ private:
+  size_t alloc_offset_ = 0;
+  size_t free_offset_ = 0;
+
+  volatile bool enabled_ = false;
+
+  DISALLOW_COPY_AND_ASSIGN(BacktraceData);
 };
 
-__LIBC_HIDDEN__ mapinfo_t* mapinfo_create(pid_t pid);
-__LIBC_HIDDEN__ void mapinfo_destroy(mapinfo_t* mi);
-__LIBC_HIDDEN__ const mapinfo_t* mapinfo_find(mapinfo_t* mi, uintptr_t pc, uintptr_t* rel_pc);
-
-#endif /* DEBUG_MAPINFO_H */
+#endif // DEBUG_MALLOC_BACKTRACEDATA_H
