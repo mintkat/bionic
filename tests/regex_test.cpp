@@ -36,3 +36,14 @@ TEST(regex, smoke) {
 
   regfree(&re);
 }
+
+TEST(regex, regerror_NULL_0) {
+  regex_t re;
+  int error = regcomp(&re, "*", REG_EXTENDED);
+  ASSERT_NE(0, error);
+
+  // Passing a null pointer and a size of 0 is a legitimate way to ask
+  // how large a buffer we would need for the error message.
+  int error_length = regerror(error, &re, nullptr, 0);
+  ASSERT_GT(error_length, 0);
+}
