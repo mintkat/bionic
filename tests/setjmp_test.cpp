@@ -239,3 +239,17 @@ TEST(setjmp, setjmp_cookie) {
   EXPECT_DEATH(longjmp(jb, 0), "");
 #endif
 }
+
+TEST(setjmp, setjmp_cookie_checksum) {
+  jmp_buf jb;
+  int value = setjmp(jb);
+
+  if (value == 0) {
+    // Flip a bit.
+    reinterpret_cast<long*>(jb)[0] ^= 1;
+
+    EXPECT_DEATH(longjmp(jb, 1), "checksum mismatch");
+  } else {
+    fprintf(stderr, "setjmp_cookie_checksum: longjmp succeeded?");
+  }
+}
