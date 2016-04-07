@@ -30,6 +30,7 @@
 #define DEBUG_MAPINFO_H
 
 #include <sys/cdefs.h>
+#include <sys/types.h>
 
 struct mapinfo_t {
   struct mapinfo_t* next;
