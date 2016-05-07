@@ -255,8 +255,6 @@ int pthread_cond_timedwait_relative_np(pthread_cond_t*, pthread_mutex_t*, const 
 #define HAVE_PTHREAD_COND_TIMEDWAIT_RELATIVE 1 /* TODO: stop defining this to push LP32 off this API sooner. */
 int pthread_cond_timeout_np(pthread_cond_t*, pthread_mutex_t*, unsigned) /* TODO: __attribute__((deprecated("use pthread_cond_timedwait instead")))*/;
 
-int pthread_mutex_lock_timeout_np(pthread_mutex_t*, unsigned) __attribute__((deprecated("use pthread_mutex_timedlock instead")));
-
 #endif /* !defined(__LP64__) */
 
 __END_DECLS
