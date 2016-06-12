@@ -3236,6 +3236,7 @@ static ElfW(Addr) __linker_init_post_relocation(KernelArgumentBlock& args, ElfW(
   // Extract information passed from the kernel.
   si->phdr = reinterpret_cast<ElfW(Phdr)*>(args.getauxval(AT_PHDR));
   si->phnum = args.getauxval(AT_PHNUM);
+  si->entry = args.getauxval(AT_ENTRY);
 
   /* Compute the value of si->base. We can't rely on the fact that
    * the first entry is the PHDR because this will not be true
@@ -3366,9 +3367,8 @@ static ElfW(Addr) __linker_init_post_relocation(KernelArgumentBlock& args, ElfW(
   fflush(stdout);
 #endif
 
-  ElfW(Addr) entry = args.getauxval(AT_ENTRY);
-  TRACE("[ Ready to execute '%s' @ %p ]", si->get_realpath(), reinterpret_cast<void*>(entry));
-  return entry;
+  TRACE("[ Ready to execute '%s' @ %p ]", si->get_realpath(), reinterpret_cast<void*>(si->entry));
+  return si->entry;
 }
 
 /* Compute the load-bias of an existing executable. This shall only
