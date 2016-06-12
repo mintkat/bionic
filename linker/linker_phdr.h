@@ -109,7 +109,4 @@ void phdr_table_get_dynamic_section(const ElfW(Phdr)* phdr_table, size_t phdr_co
                                     ElfW(Addr) load_bias, ElfW(Dyn)** dynamic,
                                     ElfW(Word)* dynamic_flags);
 
-const char* phdr_table_get_interpreter_name(const ElfW(Phdr) * phdr_table, size_t phdr_count,
-                                            ElfW(Addr) load_bias);
-
 #endif /* LINKER_PHDR_H */
